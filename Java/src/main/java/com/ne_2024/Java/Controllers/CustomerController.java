@@ -6,6 +6,8 @@ import com.ne_2024.Java.Services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
@@ -31,5 +33,10 @@ public class CustomerController {
     @PostMapping("/{fromCustomerId}/transfer/{toCustomerId}")
     public Banking transferMoney(@PathVariable Long fromCustomerId, @PathVariable Long toCustomerId, @RequestParam double amount) {
         return customerService.transferMoney(fromCustomerId, toCustomerId, amount);
+    }
+
+    @GetMapping("/all")
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 }

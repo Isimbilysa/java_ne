@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -142,6 +143,16 @@ public class CustomerService {
             return banking;
         }
         throw new RuntimeException("Customer(s) not found");
+    }
+
+    @Transactional
+    public List<Customer> getAllCustomers(){
+        try{
+            List<Customer> customers= customerRepository.findAll();
+            return customers;
+        }catch (Exception e){
+            throw new RuntimeException("Internal server error");
+        }
     }
 }
 
