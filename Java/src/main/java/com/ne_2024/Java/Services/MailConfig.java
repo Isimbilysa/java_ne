@@ -13,11 +13,11 @@ public class MailConfig {
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.example.com");
+        mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("your-email@example.com");
-        mailSender.setPassword("your-password");
+        mailSender.setUsername("rcaclassof2024@gmail.com");
+        mailSender.setPassword("dmybkumaptwcosht");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

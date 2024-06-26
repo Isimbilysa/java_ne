@@ -38,11 +38,15 @@ public class CustomerService {
     public Banking saveMoney(Long customerId, double amount) {
         Optional<Customer> customerOptional = customerRepository.findById(customerId);
         if (customerOptional.isPresent()) {
+            System.out.println("customer is present");
             Customer customer = customerOptional.get();
             customer.setBalance(customer.getBalance() + amount);
+
+            System.out.println("added balance");
             customer.setLastUpdateDateTime(LocalDateTime.now());
             customerRepository.save(customer);
 
+            System.out.println("about to create banking");
             Banking banking = new Banking();
             banking.setCustomer(customer);
             banking.setAccount(customer.getAccount());
@@ -51,16 +55,20 @@ public class CustomerService {
             banking.setBankingDateTime(LocalDateTime.now());
             bankingRepository.save(banking);
 
+            System.out.println("saved banking");
+
             String messageText = "Dear " + customer.getFirstName() + " " + customer.getLastName() +
                     ", your saving of " + amount + " on your account " + customer.getAccount() + " has been completed successfully.";
             emailService.sendEmail(customer.getEmail(), "Transaction Alert", messageText);
 
+            System.out.println("about to create message");
             Message message = new Message();
             message.setCustomer(customer);
             message.setMessage(messageText);
             message.setDateTime(LocalDateTime.now());
             messageRepository.save(message);
 
+            System.out.println("saved message");
             return banking;
         }
         throw new RuntimeException("Customer not found");
